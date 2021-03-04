@@ -10,10 +10,6 @@ class Action {
     public void execute(Player player) {}
 }
 
-class NothingAction extends Action{
-
-}
-
 class GoToAction extends Action{
     int space;
 

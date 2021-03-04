@@ -34,6 +34,19 @@ public class Board {
         return topad;
     }
 
+    private String paddedWord(char[] outerpadding, char[] innerpadding, String topad, int size){
+        while (topad.length() <= size - 4){
+            topad = innerpadding[0] + topad + innerpadding[1];
+        }
+
+        if (topad.length() < size - 2){
+            topad = topad + innerpadding[1];
+        }
+
+        topad = outerpadding[0] + topad + outerpadding[1];
+        return topad;
+    }
+
     private String paddedWord(String topad, int size){
         return paddedWord('|', ' ', topad, size);
     }
@@ -56,6 +69,18 @@ public class Board {
     public void printBoard(ArrayList<Player> players){
         int padsize = 20;
 
+        String middlePad = paddedWord('│', ' ', "", 22);
+        String[] deckArt = {"",
+                paddedWord(new char[]{'┌', '┐'}, new char[]{'─', '─'}, "", 22),
+                middlePad,
+                middlePad,
+                paddedWord('│', ' ', "Deck", 22),
+                middlePad,
+                middlePad,
+                middlePad,
+                paddedWord(new char[]{'└', '┘'}, new char[]{'─', '─'}, "", 22),
+                ""};
+
         //top
         System.out.print(paddedWord("Start", padsize));
         for (int i = 1; i < 8; i++) {
@@ -70,7 +95,7 @@ public class Board {
         //middle
         for (int i = 0; i < 5; i++) {
             System.out.print(paddedWord(Integer.toString(25 - i), padsize));
-            System.out.print(paddedWord(' ',' ', " ", padsize * 6));
+            System.out.print(paddedWord(' ',' ', deckArt[i * 2], padsize * 6));
             System.out.print(paddedWord(Integer.toString(i + 8), padsize));
             System.out.println();
 
@@ -78,7 +103,7 @@ public class Board {
                 System.out.print(paddedWord(getplayersinspace(players, Math.abs(i + 32 * x - 25)), padsize));
                 // Math.abs(i + 32 * x - 25) just gives (25 - i) then (i + 8) at x=0 and x=1 respectively
                 if (x == 0){
-                    System.out.print(paddedWord(' ',' ', " ", padsize * 6));
+                    System.out.print(paddedWord(' ',' ', deckArt[i * 2 + 1], padsize * 6));
                 }
             }
             System.out.println();

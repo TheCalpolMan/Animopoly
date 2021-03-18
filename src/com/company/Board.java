@@ -7,7 +7,7 @@ public class Board {
 
     public Board(){
         for (int i = 0; i < 26; i++) {
-            Board.add(new Animal());
+            Board.add(new Animal("Bilbo", i * 50, i * 25, i));
         }
     }
 
@@ -17,7 +17,7 @@ public class Board {
 
 
     public void upgradeSpace(int space){
-        Board.get(space).setLevel(getSpace(space).getLevel() + 1);
+        Board.get(space).setAnimal_Level(getSpace(space).getAnimal_Level() + 1);
     }
 
 
@@ -65,7 +65,7 @@ public class Board {
         }
         return playersinspace;
     }
-    
+
     public void printBoard(ArrayList<Player> players){
         int padsize = 20;
 
@@ -81,7 +81,7 @@ public class Board {
                 paddedWord(new char[]{'└', '┘'}, new char[]{'─', '─'}, "", 22),
                 ""};
 
-        //top
+        //print top of board
         System.out.print(paddedWord("Start", padsize));
         for (int i = 1; i < 8; i++) {
             System.out.print(paddedWord(Integer.toString(i), padsize));
@@ -92,7 +92,7 @@ public class Board {
         }
         System.out.println();
 
-        //middle
+        //print middle of board
         for (int i = 0; i < 5; i++) {
             System.out.print(paddedWord(Integer.toString(25 - i), padsize));
             System.out.print(paddedWord(' ',' ', deckArt[i * 2], padsize * 6));
@@ -109,7 +109,7 @@ public class Board {
             System.out.println();
         }
 
-        //bottom
+        //print bottom of board
         for (int i = 0; i < 7; i++) {
             System.out.print(paddedWord(Integer.toString(20 - i), padsize));
         }

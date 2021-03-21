@@ -7,17 +7,21 @@ import java.util.Random;
 // all the action classes for what cards do
 
 class Action {
-    public void execute(Player player) {}
+    public void execute(Player player, ArrayList<Animal> animals) {}
 }
 
-class GoToAction extends Action{
+class ClockwiseMoveAction extends Action{
     int space;
 
-    public GoToAction(int space){
+    public ClockwiseMoveAction(int space){
         this.space = space;
     }
 
-    public void execute(Player player){
+    public void execute(Player player, ArrayList<Animal> animals){
+        if (player.getSpace() >= space){
+            player.deltaMoney(500);
+        }
+
         player.setSpace(space);
     }
 }
@@ -29,13 +33,13 @@ class DeltaMoneyAction extends Action{
         this.money = money;
     }
 
-    public void execute(Player player){
+    public void execute(Player player, ArrayList<Animal> animals){
         player.deltaMoney(money);
     }
 }
 
 class MissTurnAction extends Action{
-    public void execute(Player player){
+    public void execute(Player player, ArrayList<Animal> animals){
         player.setMissTurn(true);
     }
 }
@@ -52,8 +56,19 @@ class AnimalRepairAction extends Action{
         this.perLevel = perLevel;
     }
 
-    public void execute(Player player){
-        // implement this when players have been properly implemented, make it like repairs in monopoly
+    public void execute(Player player, ArrayList<Animal> animals){
+        int totcost = 0;
+
+        for (Animal animal : animals){
+            if (animal == null){
+                continue;
+            }
+            if (animal.getOwner() == player){
+                totcost += perAnimal + animal.getLevel() * perLevel;
+            }
+        }
+
+        player.deltaMoney(-totcost);
     }
 }
 
@@ -68,7 +83,7 @@ class RandomMoneyAction extends Action{
         this.upper = upper;
     }
 
-    public void execute(Player player){
+    public void execute(Player player, ArrayList<Animal> animals){
         player.deltaMoney(random.nextInt(upper - lower) + lower);
     }
 }
@@ -87,17 +102,25 @@ class Card{
         this.actions.add(action);
     }
 
+    public ArrayList<Action> getActions() {
+        return actions;
+    }
+
     public Card(String text, ArrayList<Action> actions){
         this.text = text;
         this.actions = actions;
     }
 
-    public void execute(Player player){
-        actions.forEach(action -> action.execute(player));
+    public void execute(Player player, ArrayList<Animal> animals){
+        actions.forEach(action -> action.execute(player, animals));
     }
 
     public String getText() {
         return text;
+    }
+
+    public void printCard(){
+        System.out.println(text);
     }
 }
 
@@ -106,8 +129,8 @@ public class Cards {
     private Random random = new Random();
 
     public Cards(){
-        cards.add(new Card("Advance to Start", new GoToAction(0)));
-        cards.add(new Card("Advance to Square 24, if you pass Start collect 500", new GoToAction(24)));
+        cards.add(new Card("Advance to Start", new ClockwiseMoveAction(0)));
+        cards.add(new Card("Advance to Square 24, if you pass Start collect 500", new ClockwiseMoveAction(24)));
         cards.add(new Card("Bank pays you dividend of 100", new DeltaMoneyAction(100)));
         cards.add(new Card("Miss your next turn", new MissTurnAction()));
         cards.add(new Card("Take your animals to the vet! 50 per animal shall be deducted from your account.", new AnimalRepairAction(-50)));

@@ -1,56 +1,61 @@
 package com.company;
 
 public class Animal {
-    String Animal_Name;
-    int Animal_Level;
-    Player Owner;
-    int Animal_Cost;
-    int Rent;
-    int Position;
+    private String name;
+    private int level;
+    private Player owner;
+    private int cost;
+    private int rent;
+    private int position;
 
-    public Animal(String animal_Name, int animal_Cost, int rent, int position) {
-        Animal_Name = animal_Name;
-        Animal_Level = 0;
-        Owner = null;
-        Animal_Cost = animal_Cost;
-        Rent = rent;
-        Position = position;
+    public Animal(String name, int animal_Cost, int rent, int position) {
+        this.name = name;
+        level = 0;
+        owner = null;
+        cost = animal_Cost;
+        this.rent = rent;
+        this.position = position;
     }
-    public String getAnimal_Name() {
-        return Animal_Name;
+
+    public String getName() {
+        return name;
     }
-    public int getAnimal_Level() {
-        return Animal_Level;
+
+    public int getLevel() {
+        return level;
     }
+
     public Player getOwner() {
-        return Owner;
-    }
-    public int getAnimal_Cost() {
-        return Animal_Cost;
-    }
-    public int getRent() {
-        return Rent;
-    }
-    public int getPosition() {
-        return Position;
+        return owner;
     }
 
-    public void setAnimal_Name(String animal_Name) {
-        Animal_Name = animal_Name;
+    public int getCost() {
+        return cost;
     }
-    public void setAnimal_Level(int animal_Level) {
-        Animal_Level = animal_Level;
+
+    public int getUpgradeCost(){
+        return cost / 3;
     }
+
+    public int getRent() {
+        return rent;
+    }
+
+    public int getLandCost() {
+        return rent * (level + 1);
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    // pretty gap!
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     public void setOwner(Player owner) {
-        Owner = owner;
-    }
-    public void setAnimal_Cost(int animal_Cost) {
-        Animal_Cost = animal_Cost;
-    }
-    public void setRent(int rent) {
-        Rent = rent;
-    }
-    public void setPosition(int position) {
-        Position = position;
+        this.owner = owner;
     }
 }

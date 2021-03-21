@@ -6,11 +6,13 @@ public class Trade {
     private int sendMoney;
     private ArrayList<Animal> sendAnimals;
     private ArrayList<Animal> receiveAnimals;
+    private Player sender;
 
-    public Trade(int sendMoney, ArrayList<Animal> sendAnimals, ArrayList<Animal> receiveAnimals){
+    public Trade(int sendMoney, ArrayList<Animal> sendAnimals, ArrayList<Animal> receiveAnimals, Player sender){
         this.sendMoney = sendMoney;
         this.sendAnimals = sendAnimals;
         this.receiveAnimals = receiveAnimals;
+        this.sender = sender;
     }
 
     public int getMoney() {
@@ -25,12 +27,33 @@ public class Trade {
         return receiveAnimals;
     }
 
-    public boolean canDoTrade(Player sender, Player receiver){
+    public Player getSender(){
+        return sender;
+    }
+
+    public boolean canDoTrade(Player receiver){
         if (sendMoney < 0 && sender.getMoney() < -sendMoney){
+            return false;
+        } else if (sendMoney > 0 && receiver.getMoney() < sendMoney){
             return false;
         }
         receiver.deltaMoney(-sendMoney);
         sender.deltaMoney(sendMoney);
+
+        for (Animal animal : sendAnimals) {
+            // check the sender has animal, if not return false
+        }
+
+        for (Animal animal : receiveAnimals){
+            // check the receiver has animal, if not return false
+        }
+
+        return true;
+    }
+
+    public void doTrade(Player receiver){
+        receiver.deltaMoney(sendMoney);
+        sender.deltaMoney(-sendMoney);
 
         for (Animal animal : sendAnimals) {
             // remove all the animals from the sender
@@ -43,18 +66,21 @@ public class Trade {
         }
     }
 
-    public void doTrade(Player sender, Player receiver){
-        receiver.deltaMoney(-sendMoney);
-        sender.deltaMoney(sendMoney);
+    public void printTrade(){
+        System.out.println();
 
-        for (Animal animal : sendAnimals) {
-            // remove all the animals from the sender
-            // add them all to the receiver
+        if (sendMoney < 0){
+            System.out.println("-£" + sendMoney);
+        } else if (sendMoney > 0){
+            System.out.println("£" + sendMoney);
+        }
+
+        for (Animal animal : sendAnimals){
+            System.out.println("+ " + animal.getName());
         }
 
         for (Animal animal : receiveAnimals){
-            // add all the animals to the sender
-            // remove them all from the receiver
+            System.out.println("- " + animal.getName());
         }
     }
 }

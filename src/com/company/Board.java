@@ -6,49 +6,52 @@ public class Board {
     private ArrayList<Animal> Board = new ArrayList<>();
 
     public Board(){
+        ArrayList<String> animalnames = new ArrayList<>();
+
+        animalnames.add("Skunk");
+        animalnames.add("Mosquito");
+        animalnames.add("Nondescript Egg");
+        animalnames.add("Handbag Dog");
+        animalnames.add("Hyena");
+        animalnames.add("Mole");
+        animalnames.add("Bear");
+        animalnames.add("Mouse");
+        animalnames.add("Panther");
+        animalnames.add("Bat");
+        animalnames.add("Armadillo");
+        animalnames.add("Bonobo");
+        animalnames.add("Frog");
+        animalnames.add("Tortoise");
+        animalnames.add("Kitefin Shark");
+        animalnames.add("Killer Whale");
+        animalnames.add("Giraffe");
+        animalnames.add("Bearded Dragon");
+        animalnames.add("Salmon");
+        animalnames.add("Monke");
+        animalnames.add("Tardigrade");
+        animalnames.add("Skink");
+        animalnames.add("Cat");
+        animalnames.add("Gaot");
+
         for (int i = 0; i < 26; i++) {
-            Board.add(new Animal("Bilbo", i * 50, i * 25, i));
+            if (i == 0 || i == 13){
+                Board.add(null);
+            } else{
+                Board.add(new Animal(animalnames.get(i - 1 - Utility.boolToInt(i > 13)), i * 50, i * 25, i));
+            }
         }
+    }
+
+    public ArrayList<Animal> getAnimals() {
+        return Board;
     }
 
     public Animal getSpace(int space){
         return Board.get(space);
     }
 
-
     public void upgradeSpace(int space){
-        Board.get(space).setAnimal_Level(getSpace(space).getAnimal_Level() + 1);
-    }
-
-
-    private String paddedWord(char outerpadding, char innerpadding, String topad, int size){
-        while (topad.length() <= size - 4){
-            topad = innerpadding + topad + innerpadding;
-        }
-
-        if (topad.length() < size - 2){
-            topad = topad + innerpadding;
-        }
-
-        topad = outerpadding + topad + outerpadding;
-        return topad;
-    }
-
-    private String paddedWord(char[] outerpadding, char[] innerpadding, String topad, int size){
-        while (topad.length() <= size - 4){
-            topad = innerpadding[0] + topad + innerpadding[1];
-        }
-
-        if (topad.length() < size - 2){
-            topad = topad + innerpadding[1];
-        }
-
-        topad = outerpadding[0] + topad + outerpadding[1];
-        return topad;
-    }
-
-    private String paddedWord(String topad, int size){
-        return paddedWord('|', ' ', topad, size);
+        Board.get(space).setLevel(getSpace(space).getLevel() + 1);
     }
 
     private String getplayersinspace(ArrayList<Player> players, int space) {
@@ -69,41 +72,41 @@ public class Board {
     public void printBoard(ArrayList<Player> players){
         int padsize = 20;
 
-        String middlePad = paddedWord('│', ' ', "", 22);
+        String middlePad = Utility.paddedString('│', ' ', "", 22);
         String[] deckArt = {"",
-                paddedWord(new char[]{'┌', '┐'}, new char[]{'─', '─'}, "", 22),
+                Utility.paddedString(new char[]{'┌', '┐'}, new char[]{'─', '─'}, "", 22),
                 middlePad,
                 middlePad,
-                paddedWord('│', ' ', "Deck", 22),
+                Utility.paddedString('│', ' ', "Deck", 22),
                 middlePad,
                 middlePad,
                 middlePad,
-                paddedWord(new char[]{'└', '┘'}, new char[]{'─', '─'}, "", 22),
+                Utility.paddedString(new char[]{'└', '┘'}, new char[]{'─', '─'}, "", 22),
                 ""};
 
         //print top of board
-        System.out.print(paddedWord("Start", padsize));
+        System.out.print(Utility.paddedString("Start", padsize));
         for (int i = 1; i < 8; i++) {
-            System.out.print(paddedWord(Integer.toString(i), padsize));
+            System.out.print(Utility.paddedString(Integer.toString(i), padsize));
         }
         System.out.println();
         for (int i = 0; i < 8; i++) {
-            System.out.print(paddedWord(getplayersinspace(players, i), padsize));
+            System.out.print(Utility.paddedString(getplayersinspace(players, i), padsize));
         }
         System.out.println();
 
         //print middle of board
         for (int i = 0; i < 5; i++) {
-            System.out.print(paddedWord(Integer.toString(25 - i), padsize));
-            System.out.print(paddedWord(' ',' ', deckArt[i * 2], padsize * 6));
-            System.out.print(paddedWord(Integer.toString(i + 8), padsize));
+            System.out.print(Utility.paddedString(Integer.toString(25 - i), padsize));
+            System.out.print(Utility.paddedString(' ',' ', deckArt[i * 2], padsize * 6));
+            System.out.print(Utility.paddedString(Integer.toString(i + 8), padsize));
             System.out.println();
 
             for (int x = 0; x < 2; x++) {
-                System.out.print(paddedWord(getplayersinspace(players, Math.abs(i + 32 * x - 25)), padsize));
-                // Math.abs(i + 32 * x - 25) just gives (25 - i) then (i + 8) at x=0 and x=1 respectively
+                System.out.print(Utility.paddedString(getplayersinspace(players, Math.abs(i + 33 * x - 25)), padsize));
+                // Math.abs(i + 33 * x - 25) just gives (25 - i) then (i + 8) at x=0 and x=1 respectively
                 if (x == 0){
-                    System.out.print(paddedWord(' ',' ', deckArt[i * 2 + 1], padsize * 6));
+                    System.out.print(Utility.paddedString(' ',' ', deckArt[i * 2 + 1], padsize * 6));
                 }
             }
             System.out.println();
@@ -111,11 +114,12 @@ public class Board {
 
         //print bottom of board
         for (int i = 0; i < 7; i++) {
-            System.out.print(paddedWord(Integer.toString(20 - i), padsize));
+            System.out.print(Utility.paddedString(Integer.toString(20 - i), padsize));
         }
-        System.out.println(paddedWord("Miss a turn", padsize));
+        System.out.println(Utility.paddedString("Miss a turn", padsize));
         for (int i = 20; i > 12; i--) {
-            System.out.print(paddedWord(getplayersinspace(players, i), padsize));
+            System.out.print(Utility.paddedString(getplayersinspace(players, i), padsize));
         }
+        System.out.println();
     }
 }

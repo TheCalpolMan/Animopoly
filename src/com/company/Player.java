@@ -3,16 +3,14 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Player {
-    private boolean missTurn;
+    private boolean missTurn = false, newTrade = false;
     private char playing_piece;
     private int space=0, money = 1500, spacesmoved = 0;
     private Random random = new Random();
     private String name;
-    private ArrayList<Trade> trades;
+    private ArrayList<Trade> trades = new ArrayList<>();
 
     public Player(char playing_piece, String name){
-        missTurn = false;
-        setSpace(space);
         this.playing_piece=playing_piece;
         this.name=name;
     }
@@ -81,7 +79,28 @@ public class Player {
         this.spacesmoved = spacesmoved;
     }
 
+    public boolean getNewTrade() {
+        return newTrade;
+    }
+
+    public void setNewTrade(boolean newTrade) {
+        this.newTrade = newTrade;
+    }
+
     public void printMoney(){
         System.out.println(name + " has £" + money + "!");
+    }
+
+    public void printData(Board board){
+        ArrayList<Animal> playeranimals;
+        System.out.println(name + "\n" + Utility.repeatedChar('-', Math.max(5, name.length())));
+        playeranimals = Utility.getPlayerAnimals(this, board.getAnimals());
+        for (Animal animal : playeranimals){
+            System.out.println(animal.getName() +
+                    "\n└──→Level: " + animal.getLevel() +
+                    "\n└──→Cost: " + animal.getCost());
+        }
+
+        System.out.println("£" + money + "\n");
     }
 }

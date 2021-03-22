@@ -130,25 +130,25 @@ public class Cards {
 
     public Cards(){
         cards.add(new Card("Advance to Start", new ClockwiseMoveAction(0)));
-        cards.add(new Card("Advance to Square 24, if you pass Start collect 500", new ClockwiseMoveAction(24)));
-        cards.add(new Card("Bank pays you dividend of 100", new DeltaMoneyAction(100)));
+        cards.add(new Card("Advance to Square 24, if you pass Start collect £500", new ClockwiseMoveAction(24)));
+        cards.add(new Card("Bank pays you dividend of £100", new DeltaMoneyAction(100)));
         cards.add(new Card("Miss your next turn", new MissTurnAction()));
-        cards.add(new Card("Take your animals to the vet! 50 per animal shall be deducted from your account.", new AnimalRepairAction(-50)));
+        cards.add(new Card("Take your animals to the vet! £50 per animal shall be deducted from your account.", new AnimalRepairAction(-50)));
         cards.add(new Card("It's your birthday! Have a tenner", new DeltaMoneyAction(10)));
-        cards.add(new Card("One of your animals gave birth, and you sold the offspring for 250!", new DeltaMoneyAction(250)));
-        cards.add(new Card("Bank error in your favour, collect 500!", new DeltaMoneyAction(500)));
-        cards.add(new Card("A pipe burst! Pay 120.", new DeltaMoneyAction(-120)));
-        cards.add(new Card("From sale of stock you get 150!", new DeltaMoneyAction(150)));
-        cards.add(new Card("Take your animals to the vet! 50 per animal level shall be deducted from your account.", new AnimalRepairAction(-50, -50)));
-        cards.add(new Card("One of your pets died. Pay 100 for it's funeral.", new DeltaMoneyAction(-100)));
-        cards.add(new Card("One of your animals mauled someone! Pay them 200 so that they don't leave you a bad review!", new DeltaMoneyAction(-200)));
-        cards.add(new Card("Your favourite animal got 2nd prize in a beauty competition! You receive 50!", new DeltaMoneyAction(50)));
+        cards.add(new Card("One of your animals gave birth, and you sold the offspring for £250!", new DeltaMoneyAction(250)));
+        cards.add(new Card("Bank error in your favour, collect £500!", new DeltaMoneyAction(500)));
+        cards.add(new Card("A pipe burst! Pay £120.", new DeltaMoneyAction(-120)));
+        cards.add(new Card("From sale of stock you get £150!", new DeltaMoneyAction(150)));
+        cards.add(new Card("Take your animals to the vet! £50 per animal level shall be deducted from your account.", new AnimalRepairAction(-50, -50)));
+        cards.add(new Card("One of your pets died. Pay £100 for it's funeral.", new DeltaMoneyAction(-100)));
+        cards.add(new Card("One of your animals mauled someone! Pay them £200 so that they don't leave you a bad review!", new DeltaMoneyAction(-200)));
+        cards.add(new Card("Your favourite animal got 2nd prize in a beauty competition! You receive £50!", new DeltaMoneyAction(50)));
         cards.add(new Card("You were bitten by a radioactive spider and were carted off to hospital! Miss a turn.", new MissTurnAction()));
-        cards.add(new Card("Caught doing illegal breeding! Breeding fine of 40!", new DeltaMoneyAction(-40)));
+        cards.add(new Card("Caught doing illegal breeding! Breeding fine of £40!", new DeltaMoneyAction(-40)));
         cards.add(new Card("You found a wallet, and took the money!", new RandomMoneyAction(5, 101)));
         cards.add(new Card("One of your animals bit a client, and they dropped their wallet!", new RandomMoneyAction(50, 151)));
-        cards.add(new Card("One of your animals broke it's leg! Vet's fee of 50!", new DeltaMoneyAction(-50)));
-        cards.add(new Card("Your animals bit a member of the Yakuza, and you had to pay them 200 for your guaranteed safety!", new DeltaMoneyAction(-200)));
+        cards.add(new Card("One of your animals broke it's leg! Vet's fee of £50!", new DeltaMoneyAction(-50)));
+        cards.add(new Card("Your animals bit a member of the Yakuza, and you had to pay them £200 for your guaranteed safety!", new DeltaMoneyAction(-200)));
     }
 
     public Card randomCard(){

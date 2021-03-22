@@ -3,20 +3,20 @@ package com.company;
 import java.util.ArrayList;
 
 public class Trade {
-    private int sendMoney;
+    private int moneytoreceiver;
     private ArrayList<Animal> sendAnimals;
     private ArrayList<Animal> receiveAnimals;
     private Player sender;
 
-    public Trade(int sendMoney, ArrayList<Animal> sendAnimals, ArrayList<Animal> receiveAnimals, Player sender){
-        this.sendMoney = sendMoney;
+    public Trade(int moneytoreceiver, ArrayList<Animal> sendAnimals, ArrayList<Animal> receiveAnimals, Player sender){
+        this.moneytoreceiver = moneytoreceiver;
         this.sendAnimals = sendAnimals;
         this.receiveAnimals = receiveAnimals;
         this.sender = sender;
     }
 
     public int getMoney() {
-        return sendMoney;
+        return moneytoreceiver;
     }
 
     public ArrayList<Animal> getSendAnimals() {
@@ -32,55 +32,70 @@ public class Trade {
     }
 
     public boolean canDoTrade(Player receiver){
-        if (sendMoney < 0 && sender.getMoney() < -sendMoney){
+        if (moneytoreceiver < 0 && receiver.getMoney() < -moneytoreceiver){
             return false;
-        } else if (sendMoney > 0 && receiver.getMoney() < sendMoney){
+        } else if (moneytoreceiver > 0 && sender.getMoney() < moneytoreceiver){
             return false;
         }
-        receiver.deltaMoney(-sendMoney);
-        sender.deltaMoney(sendMoney);
 
         for (Animal animal : sendAnimals) {
             // check the sender has animal, if not return false
+
+            if (animal.getOwner() != sender){
+                return false;
+            }
         }
 
         for (Animal animal : receiveAnimals){
             // check the receiver has animal, if not return false
+
+            if (animal.getOwner() != receiver){
+                return false;
+            }
         }
 
         return true;
     }
 
     public void doTrade(Player receiver){
-        receiver.deltaMoney(sendMoney);
-        sender.deltaMoney(-sendMoney);
+        receiver.deltaMoney(moneytoreceiver);
+        sender.deltaMoney(-moneytoreceiver);
 
         for (Animal animal : sendAnimals) {
             // remove all the animals from the sender
             // add them all to the receiver
+
+            animal.setOwner(receiver);
         }
 
         for (Animal animal : receiveAnimals){
             // add all the animals to the sender
             // remove them all from the receiver
+
+            animal.setOwner(sender);
         }
     }
 
     public void printTrade(){
-        System.out.println();
+        System.out.println("From " + sender.getName() +
+                "\n" + Utility.repeatedChar('-', ("From " + sender.getName()).length()));
 
-        if (sendMoney < 0){
-            System.out.println("-£" + sendMoney);
-        } else if (sendMoney > 0){
-            System.out.println("£" + sendMoney);
+        if (moneytoreceiver < 0){
+            System.out.println("-£" + Math.abs(moneytoreceiver));
+        } else if (moneytoreceiver > 0){
+            System.out.println("£" + moneytoreceiver);
         }
 
         for (Animal animal : sendAnimals){
-            System.out.println("+ " + animal.getName());
+            System.out.println("+ " + animal.getName() +
+                    "\n└──→Level: " + animal.getLevel());
         }
 
         for (Animal animal : receiveAnimals){
-            System.out.println("- " + animal.getName());
+            System.out.println("- " + animal.getName() +
+                    "\n└──→Level: " + animal.getLevel());
         }
+
+        System.out.println();
     }
 }

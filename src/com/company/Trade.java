@@ -2,12 +2,15 @@ package com.company;
 
 import java.util.ArrayList;
 
+//trading code
 public class Trade {
+    //identifers for the trading class
     private int moneytoreceiver;
     private ArrayList<Animal> sendAnimals;
     private ArrayList<Animal> receiveAnimals;
     private Player sender;
 
+    //constructors for the trading class
     public Trade(int moneytoreceiver, ArrayList<Animal> sendAnimals, ArrayList<Animal> receiveAnimals, Player sender){
         this.moneytoreceiver = moneytoreceiver;
         this.sendAnimals = sendAnimals;
@@ -15,6 +18,7 @@ public class Trade {
         this.sender = sender;
     }
 
+    //getters for the trading class
     public int getMoney() {
         return moneytoreceiver;
     }
@@ -57,6 +61,7 @@ public class Trade {
         return true;
     }
 
+    //code to finalise the trade
     public void doTrade(Player receiver){
         receiver.deltaMoney(moneytoreceiver);
         sender.deltaMoney(-moneytoreceiver);
@@ -76,6 +81,7 @@ public class Trade {
         }
     }
 
+    //code to print out the transaction invoice
     public void printTrade(){
         System.out.println("From " + sender.getName() +
                 "\n" + Utility.repeatedChar('-', ("From " + sender.getName()).length()));

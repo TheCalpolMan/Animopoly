@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Board {
     private ArrayList<Animal> Board = new ArrayList<>();
 
+    //animal names list
     public Board(){
         ArrayList<String> animalnames = new ArrayList<>();
 
@@ -42,18 +43,22 @@ public class Board {
         }
     }
 
+    //code to retrieve animal name list
     public ArrayList<Animal> getAnimals() {
         return Board;
     }
 
+    //code to retrieve the position of the animal on the board
     public Animal getSpace(int space){
         return Board.get(space);
     }
 
+    //code to get the upgraded value of the animal
     public void upgradeSpace(int space){
         Board.get(space).setLevel(getSpace(space).getLevel() + 1);
     }
 
+    //this code is used to show how many players are in a certian part of the board
     private String getplayersinspace(ArrayList<Player> players, int space) {
         String playersinspace = "";
 
@@ -69,6 +74,7 @@ public class Board {
         return playersinspace;
     }
 
+    //this code is used to print out the board for the players to see
     public void printBoard(ArrayList<Player> players){
         int padsize = 20;
 

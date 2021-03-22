@@ -3,6 +3,7 @@ package com.company;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//main code to run the game
 public class Main {
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
@@ -21,6 +22,7 @@ public class Main {
         Trade tradetosend;
         Card card;
 
+        //starting message and loops to enter players
         System.out.println("Welcome to Animopoly! Take a shot!");
         readinint = 1;
         while (readinint != 0 || players.size() < 2){
@@ -59,6 +61,7 @@ public class Main {
             currentplayerindex = currentplayerindex % players.size();
             currentplayer = players.get(currentplayerindex);
 
+            //flag to ensure the board gets printed
             if (! boardprinted){
                 board.printBoard(players);
                 System.out.println(currentplayer.getName() + "'s go!\n");
@@ -71,6 +74,7 @@ public class Main {
 
             currentplayer.printMoney();
 
+            //code to make sure the player doesnt get a turn when they land at a certian place
             if (currentplayer.getMissTurn()){
                 System.out.println("This player misses a go!");
                 currentplayer.setMissTurn(false);
@@ -89,7 +93,7 @@ public class Main {
             }
 
             switch (readinint){
-                case 1: // animal upgrade
+                case 1: // animal upgrade section
                     readinint = 1;
 
                     while (readinint != 0){

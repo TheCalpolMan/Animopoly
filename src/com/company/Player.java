@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Player {
+    //identifiers for the player class
     private boolean missTurn = false, newTrade = false;
     private char playing_piece;
     private int space=0, money = 1500, spacesmoved = 0;
@@ -10,44 +11,40 @@ public class Player {
     private String name;
     private ArrayList<Trade> trades = new ArrayList<>();
 
+    //constructors
     public Player(char playing_piece, String name){
         this.playing_piece=playing_piece;
         this.name=name;
     }
 
+    //getters for the player class
     public ArrayList<Trade> getTrades() {
         return trades;
     }
-
     public void addTrade(Trade trade){
         trades.add(trade);
     }
-
     public String getName() {
         return name;
     }
-
     public char getPiece(){
         return playing_piece;
     }
-
     public int getSpace(){
        return space;
     }
-
     public int getMoney(){
         return money;
     }
-
     public void setSpace(int space)
     {
         this.space=space;
     }
-
     public int getSpacesmoved() {
         return spacesmoved;
     }
 
+    //dice roll code
     public boolean roll()
     {
         boolean double_dice=false;
@@ -62,6 +59,8 @@ public class Player {
         return(double_dice);
     }
 
+
+    //settes used for other parts of the code
     public void deltaMoney(int money)
     {
         this.money+=money;

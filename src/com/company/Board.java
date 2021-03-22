@@ -18,7 +18,6 @@ public class Board {
         animalnames.add("Bear");
         animalnames.add("Mouse");
         animalnames.add("Panther");
-        animalnames.add("Bat");
         animalnames.add("Armadillo");
         animalnames.add("Bonobo");
         animalnames.add("Frog");
@@ -33,6 +32,7 @@ public class Board {
         animalnames.add("Skink");
         animalnames.add("Cat");
         animalnames.add("Gaot");
+        animalnames.add("Bilbo");
 
         for (int i = 0; i < 26; i++) {
             if (i == 0 || i == 13){

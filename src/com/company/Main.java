@@ -63,6 +63,11 @@ public class Main {
 
             //flag to ensure the board gets printed
             if (! boardprinted){
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ignored) {
+                }
+
                 board.printBoard(players);
                 System.out.println(currentplayer.getName() + "'s go!\n");
                 if (currentplayer.getNewTrade()){
@@ -334,7 +339,7 @@ public class Main {
             System.out.println("Miss a turn!");
             currentplayer.setMissTurn(true);
         } else if (board.getSpace(currentplayer.getSpace()).getOwner() == null){
-            if (board.getSpace(currentplayer.getSpace()).getCost() <= currentplayer.getMoney()){
+            if (board.getSpace(currentplayer.getSpace()).getCost() < currentplayer.getMoney()){
                 System.out.println("\n" + animal.getName() + "\n" + Utility.repeatedChar('-', animal.getName().length()) +
                         "\nCost: " + animal.getCost() + "\nInitial rent: " + animal.getRent());
 
@@ -367,6 +372,8 @@ public class Main {
                 killPlayer(currentplayer, board.getSpace(currentplayer.getSpace()).getOwner(), board, players);
                 return true;
             }
+        } else if (board.getSpace(currentplayer.getSpace()).getOwner() == currentplayer){
+            System.out.println("You own the animal on this square");
         }
 
         return false;

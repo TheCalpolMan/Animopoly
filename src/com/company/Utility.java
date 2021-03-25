@@ -1,6 +1,8 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Utility {
     public static int boolToInt(boolean bool){
@@ -96,22 +98,24 @@ public class Utility {
         boolean animalinarray;
 
         for (int i = 0; i < tosearch.length(); i++) {
-            if (i < cut){
+            if (cut >= tosearch.length()){
+                break;
+            } else if (i < cut){
                 continue;
             }
 
             for (Animal animal : animals){
-                if (i + animal.getName().length() > tosearch.length()){
+                if (animal.getName().length() - i > tosearch.length()){
                     continue;
                 }
 
-                if (i + animal.getName().length() == tosearch.length()){
+                if (animal.getName().length() - i == tosearch.length()){
                     if (tosearch.substring(i).equals(animal.getName())){
                         returnanimals.add(animal);
                         cut = tosearch.length();
                     }
                 } else{
-                    if (tosearch.substring(i, animal.getName().length()).equals(animal.getName())){
+                    if (tosearch.substring(i, i + animal.getName().length()).equals(animal.getName())){
                         returnanimals.add(animal);
                         cut = i + animal.getName().length() - 1;
                     }
@@ -135,5 +139,19 @@ public class Utility {
         }
 
         return returnanimalspure;
+    }
+
+    public static int readIn(Scanner reader, String inputText, int falseval){
+        int returndata = falseval;
+        while (returndata == falseval){
+            try{
+                System.out.println(inputText);
+                returndata = reader.nextInt();
+            } catch (InputMismatchException e){
+                System.out.println("Input the right datatype please");
+                reader.nextLine();
+            }
+        }
+        return returndata;
     }
 }

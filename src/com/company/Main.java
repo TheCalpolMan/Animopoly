@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 //main code to run the game
@@ -50,8 +51,7 @@ public class Main {
                     }
                 }
             }
-            System.out.println("If you want to add another player, enter an integer other than 0");
-            readinint = reader.nextInt();
+            readinint = Utility.readIn(reader, "If you want to add another player, enter an integer other than 0", -1245);
             reader.nextLine();
 
             players.add(new Player(readinchar, readinstring));
@@ -89,12 +89,11 @@ public class Main {
 
             readinint = 0;
             while (! (0 < readinint && readinint < 5)){
-                System.out.println("Enter an integer between 1 and 4 (inclusive) \n" +
+                readinint = Utility.readIn(reader, "Enter an integer between 1 and 4 (inclusive) \n" +
                         "1. Upgrade animals\n" +
                         "2. Send trade\n" +
                         "3. Check trades\n" +
-                        "4. Roll");
-                readinint = reader.nextInt();
+                        "4. Roll", 0);
             }
 
             switch (readinint){
@@ -116,7 +115,7 @@ public class Main {
                                     "\nCurrent rent: " + animal.getLandCost());
 
                             if (animal.getLevel() == 3){
-                                System.out.println("Upgraded rent: N/A - " + animal.getName() + " is max level already");
+                                System.out.println("Upgraded rent: N/A - " + animal.getName() + " is max level already\n");
                             } else{
                                 System.out.println("Upgraded rent: " + animal.getRent() * (animal.getLevel() + 2) + "\n");
                             }
@@ -143,8 +142,7 @@ public class Main {
                         }
 
                         currentplayer.printMoney();
-                        System.out.println("If you want to upgrade another animal, enter an integer that isn't 0. If you don't, enter 0.");
-                        readinint = reader.nextInt();
+                        readinint = Utility.readIn(reader, "If you want to upgrade another animal, enter an integer that isn't 0. If you don't, enter 0.", -1245);
                     }
 
                     break;
@@ -177,8 +175,7 @@ public class Main {
                     currentplayer.printData(board);
                     tradeplayer.printData(board);
 
-                    System.out.println("Please enter the amount of money you'd like to trade. Enter a negative amount if you'd like to be receiving it.");
-                    trademoney = reader.nextInt();
+                    trademoney = Utility.readIn(reader, "Please enter the amount of money you'd like to trade. Enter a negative amount if you'd like to be receiving it.", -1000000000);
                     System.out.println("Please enter the animals you'd like to receive. Enter them with one space between each animal");
                     reader.nextLine();
                     readinstring = reader.nextLine();
@@ -192,8 +189,7 @@ public class Main {
 
                     tradetosend = new Trade(trademoney, sendtradeanimals, receivetradeanimals, currentplayer);
                     tradetosend.printTrade();
-                    System.out.println("If this trade is okay to send, enter 1. If not, enter any other integer");
-                    readinint = reader.nextInt();
+                    readinint = Utility.readIn(reader, "If this trade is okay to send, enter 1. If not, enter any other integer", -1000000000);
 
                     if (readinint == 1){
                         System.out.println("Trade sent!");
@@ -212,8 +208,7 @@ public class Main {
                         currentplayer.getTrades().get(i).printTrade();
                     }
 
-                    System.out.println("Enter 1 if you'd like to accept trades, or 2 if you'd like to delete them. Enter any other integer to do neither");
-                    readinint = reader.nextInt();
+                    readinint = Utility.readIn(reader, "Enter 1 if you'd like to accept trades, or 2 if you'd like to delete them. Enter any other integer to do neither", -1000000000);
 
                     switch (readinint){
                         case 1: // accept trades
@@ -297,7 +292,8 @@ public class Main {
                         card.execute(currentplayer, board.getAnimals());
 
                         if (currentplayer.getMoney() <= 0){
-                            System.out.println("It's the end of the line for you, buckaroo. Sayonara. (You were charged more money that you have)");
+                            System.out.println("It's the end of the line for you, buckaroo. Sayonara. (You were charged more money that you have)" +
+                                    "\nYour animals have been released back into the wild (the board)");
                             killPlayer(currentplayer, board, players);
                             break;
                         }
@@ -326,6 +322,16 @@ public class Main {
                     break;
             }
         }
+
+        currentplayer = players.get(0);
+
+        System.out.println(currentplayer.getName() + " won! Good job! These were the animals you won with:\n");
+
+        playeranimals = Utility.getPlayerAnimals(players.get(0), board.getAnimals());
+
+        for (Animal animal: playeranimals){
+            System.out.println(animal.getName());
+        }
     }
 
     private static boolean afterMove(Board board, Player currentplayer, ArrayList<Player> players, Scanner reader) {
@@ -349,8 +355,7 @@ public class Main {
                 System.out.println();
 
                 currentplayer.printMoney();
-                System.out.println("Would you like to purchase this animal? If you would, enter '1'. If not, enter any other integer");
-                readinint = reader.nextInt();
+                readinint = Utility.readIn(reader, "Would you like to purchase this animal? If you would, enter '1'. If not, enter any other integer", -100000);
                 if (readinint == 1){
                     board.getSpace(currentplayer.getSpace()).setOwner(currentplayer);
                     currentplayer.deltaMoney(-board.getSpace(currentplayer.getSpace()).getCost());
@@ -368,7 +373,8 @@ public class Main {
                 currentplayer.deltaMoney(-board.getSpace(currentplayer.getSpace()).getLandCost());
                 board.getSpace(currentplayer.getSpace()).getOwner().deltaMoney(board.getSpace(currentplayer.getSpace()).getLandCost());
             } else {
-                System.out.println("It's the end of the line for you, buckaroo. Sayonara. (You were charged more money that you have)");
+                System.out.println("It's the end of the line for you, buckaroo. Sayonara. (You were charged more money that you have)" +
+                        "\n" + board.getSpace(currentplayer.getSpace()).getOwner().getName() + " killed you.");
                 killPlayer(currentplayer, board.getSpace(currentplayer.getSpace()).getOwner(), board, players);
                 return true;
             }
